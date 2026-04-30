@@ -1,98 +1,108 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import React from 'react';
+import { StyleSheet, Text, View, Image } from 'react-native';
+import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 
-import { HelloWave } from '@/components/hello-wave';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
+// Changed: improved layout. 04/30/2026
 
-export default function HomeScreen() {
-  return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome to the App!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try the App</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <Link href="/modal">
-          <Link.Trigger>
-            <ThemedText type="subtitle">Step 2: Explore the App</ThemedText>
-          </Link.Trigger>
-          <Link.Preview />
-          <Link.Menu>
-            <Link.MenuAction title="Action" icon="cube" onPress={() => alert('Action pressed')} />
-            <Link.MenuAction
-              title="Share"
-              icon="square.and.arrow.up"
-              onPress={() => alert('Share pressed')}
+const App = () => (
+  <SafeAreaProvider>
+    <SafeAreaView style={styles.screen}>
+      <View style={styles.mainContainer}>
+        <View style={styles.profileCard}>
+          <View style={styles.imageContainer}>
+            <Image
+              source={require('../../assets/images/pfp.jpg')}
+              style={styles.photo}
             />
-            <Link.Menu title="More" icon="ellipsis">
-              <Link.MenuAction
-                title="Delete"
-                icon="trash"
-                destructive
-                onPress={() => alert('Delete pressed')}
-              />
-            </Link.Menu>
-          </Link.Menu>
-        </Link>
+          </View>
 
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start on this App!</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
-  );
-}
+          <View style={styles.infoContainer}>
+            <Text style={styles.name}>Eli Jiannee Caminero</Text>
+            <Text style={styles.course}>Mobile Development</Text>
+            <Text style={styles.bio}> A Multimedia student in section A302, who loves to create pretty visuals and explore her creativity. </Text>
+          </View>
+        </View>
+      </View>
+    </SafeAreaView>
+  </SafeAreaProvider>
+);
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
+  screen: {
+    flex: 1,
+    backgroundColor: '#ffe6f2',
+  },
+  mainContainer: {
+    flex: 1,
+    justifyContent: 'center',
     alignItems: 'center',
-    gap: 8,
+    padding: 20,
   },
-  stepContainer: {
-    gap: 8,
+  profileCard: {
+    backgroundColor: '#fff',
+    borderRadius: 20,
+    borderWidth: 3,
+    borderColor: '#ff69b4',
+    padding: 30,
+    width: '90%',
+    maxWidth: 400,
+    shadowColor: '#ff69b4',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 8,
+  },
+  imageContainer: {
+    alignItems: 'center',
+    marginBottom: 20,
+    borderWidth: 4,
+    borderColor: '#ffb3d9',
+    borderRadius: 80,
+    padding: 8,
+    backgroundColor: '#fff5f8',
+  },
+  photo: {
+    width: 120,
+    height: 120,
+    borderRadius: 60,
+  },
+  infoContainer: {
+    alignItems: 'center',
+  },
+  name: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#ff1493',
     marginBottom: 8,
+    textAlign: 'center',
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  course: {
+    fontSize: 18,
+    color: "#ff69b4",
+    marginBottom: 12,
+    textAlign: 'center',
+    backgroundColor: '#fff0f5',
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 20,
+    borderWidth: 2,
+    borderColor: '#ffb3d9',
+    fontWeight: '600',
+  },
+  bio: {
+    fontSize: 16,
+    color: "#ff1493",
+    textAlign: 'center',
+    lineHeight: 24,
+    backgroundColor: '#fff5f8',
+    padding: 16,
+    borderRadius: 15,
+    borderWidth: 2,
+    borderColor: '#ffb3d9',
   },
 });
+
+export default App;
