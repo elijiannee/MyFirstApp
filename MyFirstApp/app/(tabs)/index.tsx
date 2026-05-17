@@ -1,108 +1,129 @@
-import React from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
-import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
+import { useState } from 'react';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import { Image } from 'expo-image';
 
-// Changed: improved layout. 04/30/2026
+export default function HomeScreen() {
+  const [name, setName] = useState('');
+  const [count, setCount] = useState(0);
 
-const App = () => (
-  <SafeAreaProvider>
-    <SafeAreaView style={styles.screen}>
-      <View style={styles.mainContainer}>
-        <View style={styles.profileCard}>
-          <View style={styles.imageContainer}>
-            <Image
-              source={require('../../assets/images/pfp.jpg')}
-              style={styles.photo}
-            />
-          </View>
+  return (
+    <View style={styles.screen}>
+      <View style={styles.cornerTopLeft} />
+      <View style={styles.cornerBottomRight} />
 
-          <View style={styles.infoContainer}>
-            <Text style={styles.name}>Eli Jiannee Caminero</Text>
-            <Text style={styles.course}>Mobile Development</Text>
-            <Text style={styles.bio}> A Multimedia student in section A302, who loves to create pretty visuals and explore her creativity. </Text>
-          </View>
-        </View>
+      <Image
+        source={require('../../assets/images/pfp.jpg')}
+        style={styles.photo}
+        contentFit="cover"
+      />
+
+      <TextInput
+        style={styles.input}
+        placeholder="Enter your name"
+        value={name}
+        onChangeText={setName}
+      />
+
+      {name !== '' && (
+        <Text style={styles.greeting}>Hello, {name}!</Text>
+      )}
+
+      {name !== '' && (
+        <Text style={styles.tapMessage}>
+          {name}, you tapped {count} times!
+        </Text>
+      )}
+
+      <View style={styles.card}>
+        <TouchableOpacity onPress={() => setCount(count + 1)}>
+          <Text style={styles.btnText}>+</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => setCount(count > 0 ? count - 1 : 0)}>
+          <Text style={styles.btnText}>-</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => setCount(0)}>
+          <Text style={styles.resetText}>RESET</Text>
+        </TouchableOpacity>
       </View>
-    </SafeAreaView>
-  </SafeAreaProvider>
-);
+    </View>
+  );
+}
 
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: '#ffe6f2',
-  },
-  mainContainer: {
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#ffe6f2',
     padding: 20,
   },
-  profileCard: {
-    backgroundColor: '#fff',
-    borderRadius: 20,
-    borderWidth: 3,
-    borderColor: '#ff69b4',
-    padding: 30,
-    width: '90%',
-    maxWidth: 400,
-    shadowColor: '#ff69b4',
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    elevation: 8,
+  cornerTopLeft: {
+    position: 'absolute',
+    top: 30,
+    bottom: 30,
+    left: 10,
+    width: 0,
+    borderLeftWidth: 4,
+    borderColor: '#ff4da6',
   },
-  imageContainer: {
-    alignItems: 'center',
-    marginBottom: 20,
-    borderWidth: 4,
-    borderColor: '#ffb3d9',
-    borderRadius: 80,
-    padding: 8,
-    backgroundColor: '#fff5f8',
+  cornerBottomRight: {
+    position: 'absolute',
+    top: 30,
+    bottom: 30,
+    right: 10,
+    width: 0,
+    borderRightWidth: 4,
+    borderColor: '#ff4da6',
   },
   photo: {
     width: 120,
     height: 120,
     borderRadius: 60,
+    marginBottom: 20,
   },
-  infoContainer: {
-    alignItems: 'center',
-  },
-  name: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#ff1493',
-    marginBottom: 8,
-    textAlign: 'center',
-  },
-  course: {
-    fontSize: 18,
-    color: "#ff69b4",
+  input: {
+    width: '90%',
+    borderWidth: 2,
+    borderColor: '#ff8dc7',
+    borderRadius: 14,
+    backgroundColor: '#fff',
+    padding: 10,
     marginBottom: 12,
-    textAlign: 'center',
-    backgroundColor: '#fff0f5',
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    borderRadius: 20,
-    borderWidth: 2,
-    borderColor: '#ffb3d9',
-    fontWeight: '600',
-  },
-  bio: {
     fontSize: 16,
-    color: "#ff1493",
-    textAlign: 'center',
-    lineHeight: 24,
-    backgroundColor: '#fff5f8',
-    padding: 16,
-    borderRadius: 15,
+  },
+  greeting: {
+    fontSize: 18,
+    color: '#333',
+    marginBottom: 4,
+  },
+  tapMessage: {
+    fontSize: 14,
+    color: '#555',
+    marginBottom: 16,
+  },
+  card: {
+    width: '90%',
+    backgroundColor: '#ff4da6',
     borderWidth: 2,
-    borderColor: '#ffb3d9',
+    borderColor: '#ff8dc7',
+    borderStyle: 'dashed',
+    borderRadius: 18,
+    paddingVertical: 10,
+    alignItems: 'center',
+    gap: 4,
+  },
+  btnText: {
+    fontSize: 22,
+    color: '#fff',
+    paddingVertical: 4,
+  },
+  resetText: {
+    fontSize: 14,
+    color: '#fff',
+    fontWeight: 'bold',
+    paddingVertical: 4,
+    letterSpacing: 1,
   },
 });
-
-export default App;
